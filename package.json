@@ -1,0 +1,12 @@
+{
+  "name": "design-engine",
+  "version": "1.0.0",
+  "description": "WAT.ai design automation — prompt to IG graphic + caption",
+  "private": true,
+  "scripts": {
+    "render": "node scripts/render.js"
+  },
+  "dependencies": {
+    "playwright": "^1.44.0"
+  }
+}
