@@ -1,0 +1,14 @@
+Download the three font families below and place them here.
+The HTML template loads them from Google Fonts CDN; local files are used when offline.
+
+  DM Serif Display  — https://fonts.google.com/specimen/DM+Serif+Display
+  Inter (weight 900) — https://fonts.google.com/specimen/Inter
+  JetBrains Mono (400, 500) — https://fonts.google.com/specimen/JetBrains+Mono
+
+Naming convention:  DMSerifDisplay-Regular.woff2
+                    Inter-Black.woff2
+                    JetBrainsMono-Regular.woff2
+                    JetBrainsMono-Medium.woff2
+
+After adding files, add @font-face rules to template.html pointing to
+../../assets/fonts/<filename> and remove the Google Fonts <link> tag.
