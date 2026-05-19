@@ -1,28 +1,27 @@
 <!DOCTYPE html>
 <!--
-  WAT.ai Instagram Post Template — 1080×1080
-  ─────────────────────────────────────────────────────────────────────────────
-  HOW TO USE:
-    1. Copy this file to generated/<slug>.html — never edit in place.
-    2. Set data-motif on .canvas:
-         particle      → workshops, events, learning (background A)
-         grid          → applications, deadlines, CTAs (background B)
-         constellation → alumni, spotlight, community (background C)
-    3. Fill the four corner slots and the hero zone (see comments).
-    4. Remove unused optional elements (watermark, accent-bar, pill).
-    5. Update the logo img src to "../../assets/logo.svg" → "../assets/logo.svg"
-       if the generated file lives in generated/.
-    6. Render: ./render.sh generated/<slug>.html
+  WAT.ai Instagram Post Template, 1080x1080
 
-  CONSTRAINTS (from tokens.md / motifs.md — do not violate):
-    • Colors: --bg #0A0A0A  --ink #FFFFFF  --ink-muted #A8A8A8
-              --gold #E8B844  --gold-dim #7A6428  --grid-line #1A1A1A
-    • Fonts: DM Serif Display (outlined hero), Inter 900 (solid hero), JetBrains Mono (all metadata)
-    • Marks: • › → · [ ] _   Nothing else.
-    • No drop shadows, gradients, rounded corners (except .pill), photographs.
-    • Gold ≤ ~10% of visible color.
-    • Three type voices max: one hero + monospace metadata + monospace detail.
-  ─────────────────────────────────────────────────────────────────────────────
+  Use:
+    1. Copy this file to generated/<slug>.html.
+    2. Set data-motif on .canvas:
+       particle, grid, constellation.
+    3. Set data-layout on .canvas:
+       standard, alumni-cover, alumni-qa.
+    4. Fill only the section matching the chosen layout.
+    5. For generated files, update ../../assets/ paths to ../assets/.
+    6. Render with ./render.sh generated/<slug>.html.
+
+  Core constraints:
+    Colors: --bg #000000, --ink #FFFFFF, --ink-muted #A8A8A8,
+            --gold #D8B125, --gold-dim #7A6428, --grid-line #1A1A1A.
+    Fonts: DM Serif Display for outlined concept heroes,
+           Inter for announcements and readable body,
+           Bebas Neue or condensed fallback for alumni names and questions,
+           JetBrains Mono for metadata.
+    Marks: • › → · [ ] _
+    No drop shadows, no gradients, no decorative emoji, no typed WAT.AI logo.
+    Photos are allowed only for alumni or people-first layouts when supplied.
 -->
 <html lang="en">
 <head>
@@ -30,9 +29,6 @@
   <meta name="viewport" content="width=1080">
   <title>WAT.ai Post</title>
   <style>
-    /* ── Local fonts ─────────────────────────────────────────────────────── */
-    /* Paths below are relative to skills/instagram-post/.                   */
-    /* When copying to generated/, change ../../assets/ → ../assets/         */
     @font-face {
       font-family: 'DM Serif Display';
       font-style: normal;
@@ -57,6 +53,13 @@
     @font-face {
       font-family: 'Inter';
       font-style: normal;
+      font-weight: 700;
+      font-display: block;
+      src: url('../../assets/fonts/Inter-Bold.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
       font-weight: 900;
       font-display: block;
       src: url('../../assets/fonts/Inter-Black.woff2') format('woff2');
@@ -75,33 +78,67 @@
       font-display: block;
       src: url('../../assets/fonts/JetBrainsMono-Medium.woff2') format('woff2');
     }
-
-    /* ── Token layer ─────────────────────────────────────────────────────── */
-    :root {
-      --bg:        #000000;
-      --ink:       #FFFFFF;
-      --ink-muted: #A8A8A8;
-      --gold:      #D8B125;
-      --gold-dim:  #7A6428;
-      --grid-line: #1A1A1A;
-
-      --font-display: 'DM Serif Display', Georgia, serif;
-      --font-sans:    'Inter', 'Helvetica Neue', Arial, sans-serif;
-      --font-mono:    'JetBrains Mono', 'Courier New', monospace;
-
-      /* Type scale — 1080×1080 canvas reference values */
-      --display-xl:  220px;   /* outlined serif hero — single short word          */
-      --display-lg:  150px;   /* outlined serif hero — two words or longer phrase  */
-      --heading-xl:  100px;   /* solid sans — name ALL CAPS                        */
-      --heading-lg:   72px;   /* solid sans — announcement Title Case              */
-      --label-lg:     22px;   /* primary monospace metadata                        */
-      --label-md:     18px;   /* secondary monospace metadata                      */
-      --label-sm:     14px;   /* corner markers, footer wordmark                   */
-
-      --pad: 60px;
+    @font-face {
+      font-family: 'Bebas Neue';
+      font-style: normal;
+      font-weight: 400;
+      font-display: block;
+      src: url('../../assets/fonts/BebasNeue-Regular.woff2') format('woff2');
     }
 
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg: #000000;
+      --ink: #FFFFFF;
+      --ink-muted: #A8A8A8;
+      --gold: #D8B125;
+      --gold-dim: #7A6428;
+      --grid-line: #1A1A1A;
+      --photo-overlay: rgba(0, 0, 0, 0.30);
+      --frame-line: rgba(216, 177, 37, 0.22);
+
+      --font-display: 'DM Serif Display', Georgia, serif;
+      --font-sans: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+      --font-condensed: 'Bebas Neue', 'Oswald', Impact, 'Arial Narrow', 'Inter', sans-serif;
+      --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+
+      --display-xl: 260px;
+      --display-lg: 180px;
+      --heading-xl: 132px;
+      --heading-lg: 96px;
+
+      --alumni-name-cover: 132px;
+      --alumni-name-header: 86px;
+      --alumni-question: 44px;
+      --alumni-question-number: 108px;
+      --alumni-eyebrow: 38px;
+
+      --body-xl: 42px;
+      --body-lg: 36px;
+
+      --label-lg: 30px;
+      --label-md: 24px;
+      --label-sm: 18px;
+
+      --pad: 64px;
+      --pad-lg: 78px;
+      --brand-logo-h: 48px;
+      --brand-logo-h-lg: 58px;
+      --partner-logo-h: 42px;
+
+      --alumni-photo-w: 514px;
+      --alumni-divider-w: 7px;
+      --avatar-size: 128px;
+      --avatar-ring: 6px;
+      --qa-number-left: 64px;
+      --qa-content-left: 216px;
+      --qa-question-top: 336px;
+    }
+
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
     html, body {
       width: 1080px;
@@ -110,7 +147,6 @@
       background: var(--bg);
     }
 
-    /* ── Canvas ──────────────────────────────────────────────────────────── */
     .canvas {
       position: relative;
       width: 1080px;
@@ -119,7 +155,6 @@
       overflow: hidden;
     }
 
-    /* ── Background layer (drawn by JS) ──────────────────────────────────── */
     .bg-layer {
       position: absolute;
       inset: 0;
@@ -129,9 +164,6 @@
       z-index: 0;
     }
 
-    /* ── Optional: watermark layer ───────────────────────────────────────── */
-    /* Repeat the hero word at very top / bottom, ~12% opacity, outlined serif */
-    /* Use when canvas feels empty without it. At most two lines (top + bottom). */
     .watermark {
       position: absolute;
       left: 0;
@@ -146,19 +178,20 @@
       z-index: 1;
       overflow: hidden;
     }
-    .watermark-top    { top: -10px;    font-size: 200px; }
-    .watermark-bottom { bottom: -10px; font-size: 200px; }
 
-    /* ── Optional: gold accent bar (alumni / spotlight only) ─────────────── */
+    .watermark-top { top: -14px; font-size: 220px; }
+    .watermark-bottom { bottom: -14px; font-size: 220px; }
+
     .accent-bar {
       position: absolute;
-      left: 0; top: 0; bottom: 0;
+      left: 0;
+      top: 0;
+      bottom: 0;
       width: 7px;
       background: var(--gold);
       z-index: 2;
     }
 
-    /* ── Corner metadata ─────────────────────────────────────────────────── */
     .meta {
       position: absolute;
       padding: var(--pad);
@@ -168,13 +201,12 @@
       flex-direction: column;
       gap: 6px;
     }
+
     .meta-tl { top: 0; left: 0; }
     .meta-tr { top: 0; right: 0; text-align: right; align-items: flex-end; }
-    .meta-bl { bottom: 0; left: 0; }
-    .meta-br { bottom: 0; right: 0; align-items: flex-end; }
+    .meta-bl { bottom: 104px; left: 0; }
+    .meta-br { bottom: 104px; right: 0; align-items: flex-end; }
 
-    /* ── Hero zone ───────────────────────────────────────────────────────── */
-    /* Center of canvas. Shift vertically with margin-top if needed. */
     .hero {
       position: absolute;
       top: 50%;
@@ -186,12 +218,9 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 32px;
+      gap: 36px;
     }
 
-    /* ── Type: outlined display serif ────────────────────────────────────── */
-    /* For abstract/conceptual titles. Size down from --display-xl if the word */
-    /* is long — target max ~960px wide (canvas 1080 minus 2×60px padding).    */
     .display-outlined {
       font-family: var(--font-display);
       font-size: var(--display-xl);
@@ -200,6 +229,7 @@
       color: transparent;
       display: block;
     }
+
     .display-outlined-lg {
       font-family: var(--font-display);
       font-size: var(--display-lg);
@@ -209,9 +239,6 @@
       display: block;
     }
 
-    /* ── Type: solid heavy sans ──────────────────────────────────────────── */
-    /* For names (ALL CAPS) and announcements (Title Case).                   */
-    /* Weight 900 = hero. Weight 600 = emphasis (secondary sans lines).       */
     .heading-solid-xl {
       font-family: var(--font-sans);
       font-weight: 900;
@@ -220,6 +247,7 @@
       color: var(--ink);
       display: block;
     }
+
     .heading-solid-lg {
       font-family: var(--font-sans);
       font-weight: 900;
@@ -228,6 +256,7 @@
       color: var(--ink);
       display: block;
     }
+
     .heading-emphasis {
       font-family: var(--font-sans);
       font-weight: 600;
@@ -237,18 +266,14 @@
       display: block;
     }
 
-    /* ── Type: monospace labels ──────────────────────────────────────────── */
     .label-lg { font-size: var(--label-lg); line-height: 1.4; }
     .label-md { font-size: var(--label-md); line-height: 1.4; }
     .label-sm { font-size: var(--label-sm); line-height: 1.4; letter-spacing: 0.06em; }
 
-    /* ── Color helpers ───────────────────────────────────────────────────── */
-    .gold     { color: var(--gold); }
-    .muted    { color: var(--ink-muted); }
+    .gold { color: var(--gold); }
+    .muted { color: var(--ink-muted); }
     .gold-dim { color: var(--gold-dim); }
 
-    /* ── Pill outline tag ────────────────────────────────────────────────── */
-    /* At most ONE per graphic. A single pinpoint location/code.              */
     .pill {
       display: inline-flex;
       align-items: center;
@@ -262,7 +287,6 @@
       letter-spacing: 0.06em;
     }
 
-    /* ── Chevron list (bottom-left detail area) ──────────────────────────── */
     .chevron-list {
       list-style: none;
       font-family: var(--font-mono);
@@ -270,169 +294,543 @@
       color: var(--ink-muted);
       line-height: 1.8;
     }
+
     .chevron-list li::before {
       content: '› ';
       color: var(--gold);
     }
 
-    /* ── WAT.AI lockup ───────────────────────────────────────────────────── */
-    .watai-lockup {
+    .bottom-brand-bar {
+      position: absolute;
+      left: var(--pad);
+      right: var(--pad);
+      bottom: var(--pad);
       display: flex;
       align-items: center;
-      gap: 8px;
-      font-family: var(--font-mono);
-      font-size: var(--label-sm);
-      color: var(--gold);
-      letter-spacing: 0.08em;
+      justify-content: space-between;
+      gap: 32px;
+      z-index: 3;
     }
-    .watai-lockup svg {
-      height: 20px;
+
+    .partner-logos {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      min-height: var(--brand-logo-h);
+    }
+
+    .partner-logo {
+      display: block;
+      height: var(--partner-logo-h);
+      max-width: 168px;
+      object-fit: contain;
+    }
+
+    .watai-logo {
+      display: block;
+      height: var(--brand-logo-h);
+      max-width: 220px;
       width: auto;
-      fill: currentColor;
+      object-fit: contain;
+    }
+
+    /* Alumni cover layout */
+
+    .canvas[data-layout="alumni-cover"] .bg-layer {
+      opacity: 0.18;
+    }
+
+    .alumni-cover {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      display: none;
+    }
+
+    .canvas[data-layout="alumni-cover"] .alumni-cover {
+      display: block;
+    }
+
+    .alumni-photo-panel {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: var(--alumni-photo-w);
+      height: 1080px;
+      overflow: hidden;
+      background: var(--bg);
+    }
+
+    .alumni-photo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+      filter: brightness(0.78);
+      display: block;
+    }
+
+    .alumni-photo-panel::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--photo-overlay);
+      pointer-events: none;
+    }
+
+    .alumni-cover-divider {
+      position: absolute;
+      left: var(--alumni-photo-w);
+      top: 142px;
+      width: var(--alumni-divider-w);
+      height: 802px;
+      background: var(--gold);
+    }
+
+    .alumni-cover-content {
+      position: absolute;
+      left: calc(var(--alumni-photo-w) + 78px);
+      top: 150px;
+      right: 72px;
+      color: var(--ink);
+    }
+
+    .alumni-cover-eyebrow {
+      font-family: var(--font-condensed);
+      font-size: var(--alumni-eyebrow);
+      line-height: 1;
+      letter-spacing: 0.16em;
+      color: var(--gold);
+      margin-bottom: 28px;
+    }
+
+    .alumni-cover-name {
+      font-family: var(--font-condensed);
+      font-size: var(--alumni-name-cover);
+      line-height: 0.88;
+      letter-spacing: 0.06em;
+      color: var(--ink);
+      text-transform: uppercase;
+      margin-bottom: 38px;
+    }
+
+    .alumni-short-rule {
+      width: 78px;
+      height: 4px;
+      background: var(--gold);
+      margin-bottom: 60px;
+    }
+
+    .alumni-role-lockup {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 6px;
+    }
+
+    .alumni-company-logo {
+      height: 64px;
+      max-width: 300px;
+      object-fit: contain;
+      display: block;
+    }
+
+    .alumni-company-name {
+      font-family: var(--font-sans);
+      font-size: 54px;
+      font-weight: 700;
+      color: var(--ink);
+      line-height: 1;
+    }
+
+    .alumni-role-line {
+      font-family: var(--font-mono);
+      font-size: 26px;
+      line-height: 1.25;
+      letter-spacing: 0.06em;
+      color: var(--ink-muted);
+      margin-top: 8px;
+    }
+
+    .alumni-achievements {
+      display: flex;
+      align-items: flex-start;
+      gap: 48px;
+      margin-top: 30px;
+    }
+
+    .alumni-achievement {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      min-width: 84px;
+    }
+
+    .alumni-achievement-icon {
+      height: 68px;
+      max-width: 84px;
+      object-fit: contain;
+      display: block;
+    }
+
+    .alumni-achievement-label {
+      font-family: var(--font-mono);
+      font-size: 23px;
+      line-height: 1.2;
+      color: var(--ink-muted);
+      letter-spacing: 0.04em;
+      text-align: center;
+    }
+
+    .alumni-brand-frame {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      width: 560px;
+      height: 82px;
+      border: 1px solid var(--frame-line);
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding-right: 56px;
+    }
+
+    .alumni-brand-frame .watai-logo {
+      height: var(--brand-logo-h-lg);
+    }
+
+    /* Alumni Q&A layout */
+
+    .alumni-qa {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      display: none;
+      color: var(--ink);
+    }
+
+    .canvas[data-layout="alumni-qa"] .alumni-qa {
+      display: block;
+    }
+
+    .canvas[data-layout="alumni-qa"] .bg-layer {
+      opacity: 0.45;
+    }
+
+    .alumni-qa-header {
+      position: absolute;
+      left: 56px;
+      top: 48px;
+      right: var(--pad-lg);
+      display: flex;
+      align-items: center;
+      gap: 34px;
+      z-index: 3;
+    }
+
+    .alumni-avatar {
+      width: var(--avatar-size);
+      height: var(--avatar-size);
+      border: var(--avatar-ring) solid var(--gold);
+      border-radius: 50%;
+      overflow: hidden;
+      background: var(--bg);
+      flex: 0 0 auto;
+    }
+
+    .alumni-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+      display: block;
+    }
+
+    .alumni-qa-name {
+      font-family: var(--font-condensed);
+      font-size: var(--alumni-name-header);
+      line-height: 0.95;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      color: var(--ink);
+      white-space: nowrap;
+    }
+
+    .alumni-qa-role {
+      font-family: var(--font-mono);
+      font-size: 29px;
+      line-height: 1.25;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-top: 10px;
+    }
+
+    .alumni-question-number {
+      position: absolute;
+      left: var(--qa-number-left);
+      top: var(--qa-question-top);
+      font-family: var(--font-sans);
+      font-size: var(--alumni-question-number);
+      line-height: 1;
+      font-weight: 900;
+      color: var(--gold-dim);
+      opacity: 0.78;
+      letter-spacing: -0.04em;
+    }
+
+    .alumni-question-block {
+      position: absolute;
+      left: var(--qa-content-left);
+      top: var(--qa-question-top);
+      right: 82px;
+    }
+
+    .alumni-question {
+      font-family: var(--font-condensed);
+      font-size: var(--alumni-question);
+      line-height: 1.16;
+      letter-spacing: 0.10em;
+      color: var(--gold);
+      text-transform: uppercase;
+    }
+
+    .alumni-answer {
+      position: absolute;
+      left: var(--qa-content-left);
+      top: 486px;
+      right: 128px;
+      font-family: var(--font-sans);
+      font-size: var(--body-xl);
+      line-height: 1.34;
+      font-weight: 400;
+      color: var(--ink);
+      letter-spacing: 0.02em;
+    }
+
+    .alumni-answer strong {
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    .alumni-answer-rule {
+      position: absolute;
+      left: 136px;
+      right: 0;
+      top: 565px;
+      height: 1px;
+      background: var(--frame-line);
+      z-index: 1;
+    }
+
+    .alumni-qa-logo {
+      position: absolute;
+      right: 56px;
+      bottom: 48px;
+      height: 56px;
+      max-width: 220px;
+      object-fit: contain;
+      z-index: 3;
+    }
+
+    /* Hide unused standard sections when an alumni layout is active */
+
+    .canvas[data-layout="alumni-cover"] > .meta,
+    .canvas[data-layout="alumni-cover"] > .hero,
+    .canvas[data-layout="alumni-cover"] > .bottom-brand-bar,
+    .canvas[data-layout="alumni-qa"] > .meta,
+    .canvas[data-layout="alumni-qa"] > .hero,
+    .canvas[data-layout="alumni-qa"] > .bottom-brand-bar {
+      display: none;
     }
   </style>
 </head>
 <body>
-
-  <!--
-    ═══════════════════════════════════════════════════════════════════════════
-    SET data-motif: particle | grid | constellation
-    ═══════════════════════════════════════════════════════════════════════════
-  -->
-  <div class="canvas" data-motif="particle">
-
-    <!-- Background SVG — drawn by the script at the bottom -->
+  <div class="canvas" data-motif="particle" data-layout="standard">
     <svg class="bg-layer" id="bg" xmlns="http://www.w3.org/2000/svg"></svg>
 
-    <!-- ── OPTIONAL: watermark ────────────────────────────────────────────
-         Remove both divs if not needed.
-         Repeat the hero word (same text) at top and bottom.
-    ──────────────────────────────────────────────────────────────────────── -->
+    <!-- Optional for standard layouts only -->
     <!-- <div class="watermark watermark-top">WORD</div> -->
     <!-- <div class="watermark watermark-bottom">WORD</div> -->
-
-    <!-- ── OPTIONAL: gold accent bar (alumni / spotlight posts only) ─────── -->
     <!-- <div class="accent-bar"></div> -->
 
-    <!-- ─────────────────────────────────────────────────────────────────────
-         TOP-LEFT: primary gold metadata
-         • What + when. Prefixed with •. One or two lines.
-         Example: <span class="label-lg gold">• SPRING 26 · TUESDAYS 6–8 PM</span>
-    ──────────────────────────────────────────────────────────────────────── -->
+    <!-- Standard layout -->
     <div class="meta meta-tl">
-      <!-- FILL IN -->
+      <!-- Example: <span class="label-lg gold">• SPRING 26 · TUESDAYS 6 PM</span> -->
     </div>
 
-    <!-- ─────────────────────────────────────────────────────────────────────
-         TOP-RIGHT: system tag (muted, two stacked lines)
-         Series marker + season. Less prominent than TL.
-         Example:
-           <span class="label-md muted">WORKSHOP · 01</span>
-           <span class="label-sm muted">SPRING_26</span>
-    ──────────────────────────────────────────────────────────────────────── -->
     <div class="meta meta-tr">
-      <!-- FILL IN -->
+      <!-- Example:
+      <span class="label-md muted">WORKSHOP · 01</span>
+      <span class="label-sm muted">SPRING_26</span>
+      -->
     </div>
 
-    <!-- ─────────────────────────────────────────────────────────────────────
-         BOTTOM-LEFT: supporting details or chevron list (may be empty)
-         Example:
-           <ul class="chevron-list">
-             <li>Topic one</li>
-             <li>Topic two</li>
-           </ul>
-    ──────────────────────────────────────────────────────────────────────── -->
     <div class="meta meta-bl">
-      <!-- FILL IN or remove -->
+      <!-- Example:
+      <ul class="chevron-list">
+        <li>Build the first model</li>
+        <li>Learn the ML workflow</li>
+      </ul>
+      -->
     </div>
 
-    <!-- ─────────────────────────────────────────────────────────────────────
-         BOTTOM-RIGHT: WAT.AI lockup — always present
-         Update src path:
-           from template: ../../assets/logo.svg
-           from generated/: ../assets/logo.svg
-    ──────────────────────────────────────────────────────────────────────── -->
-    <div class="meta meta-br">
-      <div class="watai-lockup">
-        <svg viewBox="0 0 341 240" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path fill-rule="evenodd" clip-rule="evenodd" d="M94.9593 227.168C64.6403 214.841 41.9429 180.704 0 0L180 142C195.843 122.293 205.606 113.448 215.345 110.313C223.444 107.706 232.645 109.577 239.254 114.936C251.941 125.223 259.551 146.816 270 188L316 67.5L341 57L270 236.5L184 170C160.497 199.542 145.017 217.795 129.728 226.569C119.21 232.605 106.193 231.735 94.9593 227.168ZM252 200L195 154C204.455 139.785 210.426 132.171 218.982 129.188C222.095 128.102 225.525 129.102 227.821 131.468C238.147 142.113 243.831 159.786 252 200ZM29 47.5C60.1289 164.895 77.0513 199.796 100.289 211.27C105.808 213.995 112.301 214.594 118.011 212.296C131.148 207.007 144.411 192.003 168.5 158L29 47.5Z"/>
-        </svg>
-        <span>WAT.AI</span>
+    <div class="bottom-brand-bar">
+      <div class="partner-logos" aria-label="Partner logos">
+        <!-- Example generated path:
+        <img class="partner-logo" src="../assets/logos/openai.svg" alt="OpenAI">
+        -->
       </div>
+      <img class="watai-logo" src="../../assets/logo.svg" alt="WAT.ai">
     </div>
 
-    <!-- ─────────────────────────────────────────────────────────────────────
-         HERO ZONE — center of canvas
-         Pick ONE hero type (never both):
-           Concept/abstract → .display-outlined or .display-outlined-lg
-           Person/announcement → .heading-solid-xl or .heading-solid-lg
-         Add .pill below the title if there's a single location to highlight.
-         For long words: reduce font-size inline so text stays within 960px width.
-    ──────────────────────────────────────────────────────────────────────── -->
     <div class="hero">
+      <!-- Example concept hero:
+      <span class="display-outlined">Zero<br>to ML</span>
+      -->
 
-      <!-- HERO TITLE: remove the example and add real content -->
-      <!-- <span class="display-outlined">Hero<br>Word</span> -->
-      <!-- <span class="heading-solid-xl">PERSON NAME</span> -->
+      <!-- Example announcement hero:
+      <span class="heading-solid-lg">Applications Open</span>
+      -->
 
-      <!-- OPTIONAL PILL (at most one) -->
-      <!-- <span class="pill">• MC 2034</span> -->
-
+      <!-- Optional pill:
+      <span class="pill">• MC 2034</span>
+      -->
     </div>
 
-  </div><!-- /.canvas -->
+    <!-- Alumni cover layout. Set .canvas data-layout="alumni-cover". -->
+    <section class="alumni-cover" aria-label="Alumni spotlight cover">
+      <div class="alumni-photo-panel">
+        <img class="alumni-photo" src="../../assets/photos/alumni-placeholder.jpg" alt="Alumni portrait">
+      </div>
+
+      <div class="alumni-cover-divider"></div>
+
+      <div class="alumni-cover-content">
+        <div class="alumni-cover-eyebrow">ALUMNI SPOTLIGHT</div>
+        <h1 class="alumni-cover-name">CARTER<br>DEMARS</h1>
+        <div class="alumni-short-rule"></div>
+
+        <div class="alumni-role-lockup">
+          <!-- Use a real logo when available. Generated path example:
+          <img class="alumni-company-logo" src="../assets/logos/openai.svg" alt="OpenAI">
+          -->
+          <img class="alumni-company-logo" src="../../assets/logos/openai.svg" alt="OpenAI">
+          <div class="alumni-company-name">OpenAI</div>
+        </div>
+
+        <div class="alumni-role-line">Inc. Member of Technical Staff</div>
+
+        <div class="alumni-achievements">
+          <div class="alumni-achievement">
+            <!-- Replace with a local asset or remove if unavailable. -->
+            <div class="alumni-achievement-icon" aria-hidden="true"></div>
+            <div class="alumni-achievement-label">x2 YC</div>
+          </div>
+          <div class="alumni-achievement">
+            <!-- Replace with a local asset or remove if unavailable. -->
+            <div class="alumni-achievement-icon" aria-hidden="true"></div>
+            <div class="alumni-achievement-label">x2 ML Patents</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="alumni-brand-frame">
+        <img class="watai-logo" src="../../assets/logo.svg" alt="WAT.ai">
+      </div>
+    </section>
+
+    <!-- Alumni Q&A layout. Set .canvas data-layout="alumni-qa". -->
+    <section class="alumni-qa" aria-label="Alumni question and answer">
+      <header class="alumni-qa-header">
+        <div class="alumni-avatar">
+          <img src="../../assets/photos/alumni-placeholder.jpg" alt="Alumni portrait">
+        </div>
+        <div>
+          <div class="alumni-qa-name">CARTER DEMARS</div>
+          <div class="alumni-qa-role">MEMBER OF TECHNICAL STAFF @ OPENAI</div>
+        </div>
+      </header>
+
+      <div class="alumni-question-number">01</div>
+
+      <div class="alumni-question-block">
+        <div class="alumni-question">
+          HOW DID LEADING WAT.AI PROJECTS CHANGE<br>
+          HOW YOU THINK ABOUT BUILDING ML SYSTEMS?
+        </div>
+      </div>
+
+      <div class="alumni-answer-rule"></div>
+
+      <div class="alumni-answer">
+        <p>
+          When I led my first WAT.ai team, I thought strong leadership meant
+          having the <strong>best technical answers.</strong>
+        </p>
+        <br>
+        <p>
+          One quirk of WAT.ai is that participation in projects is voluntary.
+          Eventually, I came to see that a good team lead needs to
+          <strong>design the right incentives</strong> and cater to their
+          members in a way that keeps them engaged with the project.
+        </p>
+      </div>
+
+      <img class="alumni-qa-logo" src="../../assets/logo.svg" alt="WAT.ai">
+    </section>
+  </div>
 
   <script>
-    // ── Background generator ──────────────────────────────────────────────
-    // Reads data-motif from .canvas and draws the appropriate SVG background.
-    // Values: particle | grid | constellation
-    // ─────────────────────────────────────────────────────────────────────
     (function () {
       const canvas = document.querySelector('.canvas');
-      const svg    = document.getElementById('bg');
-      const motif  = (canvas.dataset.motif || 'particle').trim();
-      const W = 1080, H = 1080;
+      const svg = document.getElementById('bg');
+      const motif = (canvas.dataset.motif || 'particle').trim();
+      const layout = (canvas.dataset.layout || 'standard').trim();
+      const W = 1080;
+      const H = 1080;
 
       svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
 
-      // Seeded PRNG for reproducible output across renders
       let seed = 0xdeadbeef;
+      if (layout === 'alumni-qa') seed = 0xc0ffee;
+      if (layout === 'alumni-cover') seed = 0xa11e1;
+
       function rand() {
         seed ^= seed << 13;
         seed ^= seed >> 17;
         seed ^= seed << 5;
         return ((seed >>> 0) / 0xffffffff);
       }
-      function rr(a, b) { return a + rand() * (b - a); }
 
-      // ── A. Particle / dust scatter ──────────────────────────────────────
-      // Signals: events, workshops, learning. Dense in one quadrant, sparse
-      // in the opposite. Looks like deep space or scattered chalk dust.
+      function rr(a, b) {
+        return a + rand() * (b - a);
+      }
+
       if (motif === 'particle') {
         let h = '';
-        // Main scatter — weighted toward upper-right quadrant
         for (let i = 0; i < 320; i++) {
-          const u = rand(), v = rand();
+          const u = rand();
+          const v = rand();
           const x = (W * 0.25) + u * (W * 0.75);
           const y = v * H;
-          const r  = rr(0.5, 2.2);
+          const r = rr(0.5, 2.2);
           const op = rr(0.07, 0.5);
           h += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r.toFixed(1)}" fill="#fff" opacity="${op.toFixed(2)}"/>`;
         }
-        // Larger dust specks — sparse
         for (let i = 0; i < 40; i++) {
           const x = (W * 0.3) + rand() * (W * 0.7);
           const y = rand() * H;
-          const r  = rr(1.5, 3.5);
+          const r = rr(1.5, 3.5);
           const op = rr(0.04, 0.18);
           h += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r.toFixed(1)}" fill="#fff" opacity="${op.toFixed(2)}"/>`;
         }
         svg.innerHTML = h;
+        return;
+      }
 
-      // ── B. Grid / mesh ──────────────────────────────────────────────────
-      // Signals: applications, deadlines, anything procedural. Thin lines at
-      // ~40px spacing, slight perspective warp outward from center.
-      } else if (motif === 'grid') {
+      if (motif === 'grid') {
         const sp = 40;
         let h = `<g stroke="#1A1A1A" stroke-width="1" fill="none">`;
         for (let x = 0; x <= W; x += sp) {
@@ -445,26 +843,37 @@
         }
         h += `</g>`;
         svg.innerHTML = h;
+        return;
+      }
 
-      // ── C. Constellation / network graph ────────────────────────────────
-      // Signals: people, alumni, community, research. Sparse dots connected
-      // to their 2 nearest neighbors, denser in the upper-right by default.
-      } else if (motif === 'constellation') {
+      if (motif === 'constellation') {
         const pts = [];
-        // Upper-right cluster (denser)
-        for (let i = 0; i < 34; i++) {
-          pts.push([W * (0.35 + rand() * 0.65), H * (0.05 + rand() * 0.50)]);
-        }
-        // Lower-left scatter (sparse)
-        for (let i = 0; i < 14; i++) {
-          pts.push([W * rand() * 0.55, H * (0.45 + rand() * 0.55)]);
+
+        if (layout === 'alumni-qa') {
+          for (let i = 0; i < 18; i++) {
+            pts.push([W * rr(-0.04, 0.20), H * rr(-0.02, 0.28)]);
+          }
+          for (let i = 0; i < 26; i++) {
+            pts.push([W * rr(0.70, 1.04), H * rr(0.76, 1.04)]);
+          }
+          for (let i = 0; i < 8; i++) {
+            pts.push([W * rr(0.42, 0.95), H * rr(0.02, 0.16)]);
+          }
+        } else {
+          for (let i = 0; i < 34; i++) {
+            pts.push([W * (0.35 + rand() * 0.65), H * (0.05 + rand() * 0.50)]);
+          }
+          for (let i = 0; i < 14; i++) {
+            pts.push([W * rand() * 0.55, H * (0.45 + rand() * 0.55)]);
+          }
         }
 
         let lines = '';
         for (let i = 0; i < pts.length; i++) {
           const sorted = pts
             .map((p, j) => {
-              const dx = pts[i][0] - p[0], dy = pts[i][1] - p[1];
+              const dx = pts[i][0] - p[0];
+              const dy = pts[i][1] - p[1];
               return [Math.sqrt(dx * dx + dy * dy), j];
             })
             .filter(([, j]) => j !== i)
@@ -475,14 +884,15 @@
             lines += `<line x1="${pts[i][0].toFixed(1)}" y1="${pts[i][1].toFixed(1)}" x2="${pts[j][0].toFixed(1)}" y2="${pts[j][1].toFixed(1)}" stroke="#A8A8A8" stroke-width="1" opacity="0.28"/>`;
           }
         }
+
         let dots = '';
         for (const [x, y] of pts) {
           dots += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${rr(1, 2.2).toFixed(1)}" fill="#A8A8A8" opacity="${rr(0.3, 0.65).toFixed(2)}"/>`;
         }
+
         svg.innerHTML = lines + dots;
       }
     })();
   </script>
-
 </body>
 </html>

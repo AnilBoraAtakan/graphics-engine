@@ -68,7 +68,7 @@ Output PNG lands next to the HTML file.
 
 ```
 1. You describe the post in natural language
-2. Claude reads all 5 brand-system files (colors, typography, motifs, voice, examples)
+2. Claude reads all 6 brand-system files (colors, typography, motifs, voice, examples, logo assets)
 3. Claude identifies the post category → picks the correct background motif
 4. Claude fills in the HTML template and writes it to generated/<slug>.html
 5. ./render.sh runs Playwright (headless Chromium) to screenshot the page at 1080×1080
@@ -84,6 +84,7 @@ The brand-system files in `skills/brand-system/` are the source of truth. Claude
 - **`voice.md`** — caption tone table by post category, recurring phrases, energy/emoji density rules, and things the WAT.ai voice does not do
 - **`examples-annotated.md`** — three reference graphics with design decisions explained
 - **`examples.md`** — three real annotated captions
+- **`logo-assets.md`** — external organization logo filename mapping and placement rules
 
 ---
 
@@ -95,7 +96,8 @@ These are hard limits. Claude will not produce output that violates them:
 |-----------|------|
 | Colors | Only the 6 tokens in `tokens.md`. No invented hex values. |
 | Fonts | DM Serif Display (outlined display), Inter 900 (solid hero), JetBrains Mono (all metadata). No others. |
-| Marks | Only `•` `›` `→` `·` `[ ]` `_`. No decorative emoji or icons inside the graphic. |
+| Marks | Only `•` `›` `→` `·` `[ ]` `_`. No decorative emoji or icons inside the graphic; partner logos only from `/assets/logos/`. |
+| Logos | WAT.ai written logo stays bottom-right in the brand bar. Partner/company logos go bottom-left when relevant. |
 | Backgrounds | Particle, grid, or constellation. One per graphic, chosen by post category. |
 | Hero | Outlined serif OR solid heavy sans — never both in the same graphic. |
 | Gold | At most ~10% of visible color. Gold is an accent, not a fill. |
@@ -111,5 +113,6 @@ If WAT.ai's visual identity changes, update these files before generating new co
 2. **Fonts changed** → replace files in `assets/fonts/` and update `@font-face` paths in `skills/instagram-post/template.html`
 3. **New post category** → add a row to the routing table in `CLAUDE.md` and the motif-choice logic in `skills/brand-system/motifs.md`
 4. **Voice changed** → update `skills/brand-system/voice.md` and add a new annotated example to `skills/brand-system/examples.md`
+5. **External logos changed** → add/remove files in `assets/logos/` and update `skills/brand-system/logo-assets.md`
 
 Do not edit `generated/` files — they are disposable output.

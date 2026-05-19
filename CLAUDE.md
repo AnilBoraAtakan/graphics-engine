@@ -6,7 +6,7 @@ Single-prompt → 1080×1080 IG graphic (PNG) + caption text file, fully on-bran
 
 ## Read the brand system on every invocation
 
-**Before writing any code or content, read all five files in `skills/brand-system/` — every time a new prompt arrives, not just once.**
+**Before writing any code or content, read all six files in `skills/brand-system/` — every time a new prompt arrives, not just once.**
 
 ```
 skills/brand-system/tokens.md             colors, typography, type scale, logo rules
@@ -14,6 +14,7 @@ skills/brand-system/motifs.md             background systems, composition, corne
 skills/brand-system/examples-annotated.md three reference graphics explained
 skills/brand-system/voice.md              caption voice rules and tone table
 skills/brand-system/examples.md           three annotated real captions
+skills/brand-system/logo-assets.md        external logo filename mapping and placement rules
 ```
 
 Skipping this step produces off-brand output. There are no exceptions.
@@ -72,7 +73,8 @@ Output PNG lands next to the input HTML file.
 
 - **Colors:** only the six tokens in `tokens.md`. No invented hex values.
 - **Fonts:** DM Serif Display (outlined display), Inter 900 (solid sans), JetBrains Mono (all metadata). No other families.
-- **Marks:** only `•` `›` `→` `·` `[ ]` `_`. No decorative emoji or icons in the graphic.
+- **Marks:** only `•` `›` `→` `·` `[ ]` `_`. No decorative emoji or icons in the graphic; partner logos are allowed only as real image assets from `/assets/logos/`.
 - **No:** drop shadows, gradients, rounded corners (pill tag is the one exception), photographs.
+- **Brand bar:** WAT.ai written logo image stays bottom-right; partner logos go bottom-left when relevant.
 - **Gold is a spice:** if more than ~10% of the visible color is gold, dial it back.
 - **If brand-system info is missing or ambiguous, ask — never guess.**

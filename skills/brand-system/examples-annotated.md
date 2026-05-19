@@ -14,7 +14,7 @@ Three reference posts with explanations of *why* the design choices work. The go
 - Hero: `Zero to ML` in outlined display serif, two lines, occupying the upper-middle 60% of the canvas. The outline treatment lets the particle-scatter background bleed *through* the letterforms, integrating type into atmosphere.
 - Pill tag: `• E7/PSE 2409` — a single pinpoint detail, called out with the only gold-outlined shape in the layout.
 - Bottom-left chevron list: topics covered, two columns, monospace, with `›` markers.
-- Bottom-right: WAT.AI lockup.
+- Bottom-right: WAT.ai written logo in the persistent brand bar.
 
 **Why it works:**
 - The outlined serif title is conceptually right — "Zero to ML" is a *concept*, not a person or an announcement. Outlined treatment matches abstract content.
@@ -32,7 +32,7 @@ Three reference posts with explanations of *why* the design choices work. The go
 
 **What's happening:**
 - Watermark layer: `Core Member` faded at top, `Applications` faded at bottom — outlined serif at ~12% opacity. Creates depth and reinforces the message without adding information.
-- Center top: WAT.AI lockup + `Spring 26` system tag, in monospace. Establishes context above the hero.
+- Center/top metadata: `Spring 26` system tag in monospace. The WAT.ai written logo still belongs in the persistent bottom brand bar.
 - Hero block, two parts:
   - `[ Core Member ]` — outlined serif wrapped in literal bracket characters. The brackets mark this as a *system entity* (a role, a slot to fill).
   - `Applications Open` — solid white heavy sans, in a black filled box behind it. This is the *announcement*, the active verb.
@@ -59,7 +59,7 @@ Three reference posts with explanations of *why* the design choices work. The go
 - Hero: `JARETT DEWBURY` in solid heavy sans, ALL CAPS, white. Two lines.
 - Below hero: `→ MIT + ICLR` in gold monospace — the headline achievement.
 - Below that: two-line monospace detail in muted white — the supporting bio.
-- Bottom-left: WAT.AI lockup. Bottom-right: `WATAI.CA`.
+- Bottom brand bar: partner or section marks on the left when needed, WAT.ai written logo on the right. Older examples may show alternate lockups; new outputs should use the consistent bar.
 
 **Why it works:**
 - A name is a *who*, so it takes the solid heavy sans treatment, not outlined serif. The hero is concrete, not conceptual.

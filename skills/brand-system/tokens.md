@@ -1,93 +1,204 @@
 # WAT.ai Brand Tokens
 
-Single source of truth for colors, typography, and spacing. Every generated graphic must reference these values — do not invent new colors or font sizes.
+Single source of truth for colors, typography, layout, and reusable treatments.
+Every generated graphic must reference these values. Do not invent new colors,
+font roles, or spacing systems.
 
-> **Confirm before locking in:** values marked `⚠️` are eyeballed from PNGs and need to be verified against your source files (Figma, Illustrator, or the website's CSS).
-
----
+> Values marked `VERIFY` are estimated from the examples and should be checked
+> against source design files when available.
 
 ## Colors
 
-| Token            | Hex         | Usage                                                                 |
-| ---------------- | ----------- | --------------------------------------------------------------------- |
-| `--bg`           | `#000000`   | Pure black base — depth comes from the motif layer (particle/grid/constellation), not from the base color. |
-| `--ink`          | `#FFFFFF`   | Primary text, outlined display type, solid sans display type.         |
-| `--ink-muted`    | `#A8A8A8`   | Secondary metadata, descriptions, faded watermark text.               |
-| `--gold`         | `#D8B125`   | Brand accent. Metadata labels, deadlines, dot bullets, accent bars.   |
-| `--gold-dim`     | `#7A6428` ⚠️ | Faded/background variant of gold (e.g. the large "01" in alumni post).|
-| `--grid-line`    | `#1A1A1A`   | Subtle grid/mesh background lines.                                    |
+| Token | Hex | Usage |
+| ----- | --- | ----- |
+| `--bg` | `#000000` | Pure black base. Depth comes from motif layers and photos, not from changing the base. |
+| `--ink` | `#FFFFFF` | Primary text, solid display type, outlined display stroke. |
+| `--ink-muted` | `#A8A8A8` | Secondary metadata, role lines, body secondary text, faded motif points. |
+| `--gold` | `#D8B125` | Brand accent. Metadata labels, dividers, question text, rings, rules, dot bullets. |
+| `--gold-dim` | `#7A6428` | Low-emphasis gold, for large alumni question numbers and background accents. VERIFY. |
+| `--grid-line` | `#1A1A1A` | Subtle grid and mesh background lines. |
+| `--photo-overlay` | `rgba(0, 0, 0, 0.30)` | Alumni photo darkening layer. |
+| `--frame-line` | `rgba(216, 177, 37, 0.22)` | Thin alumni cover logo frame and subtle structural borders. |
 
-**Rules:**
-- Gold (`--gold`) is reserved for metadata, accents, and small touches. **Never** use it for body text or large title fills.
-- Display titles are either **white outlined** (serif) or **solid white** (heavy sans). Never gold-filled headlines.
+## Color rules
+
+- Gold is reserved for metadata, accents, alumni questions, rings, and small
+  structural lines.
+- Display titles are white. Alumni questions may be gold because they function
+  as metadata-level prompts, not body copy.
+- Never use gold for long paragraph text.
 - Backgrounds are always dark. No light-mode variants.
-
----
+- Do not use gradients. For photos, use a flat overlay only.
 
 ## Typography
 
-Three type families, each with a fixed role. Mixing roles is the most common mistake — keep them in their lanes.
+### 1. Display serif, outlined: `--font-display`
 
-### 1. Display Serif (outlined) — `--font-display`
-**Identification:** ⚠️ Default substitute — actual brand serif unconfirmed; verify against Figma source files and swap if different. Current default: **DM Serif Display** (Google Fonts).
-**Treatment:** outlined only, via `-webkit-text-stroke: 2px white; color: transparent;` (or SVG `fill="none" stroke="white"`).
-**Use for:** the hero word/phrase that names the thing — workshop title, section title, watermark text.
-**Sizes:** 120–220px on a 1080² canvas. Always large enough to dominate.
+**Default:** DM Serif Display, verify against source files.
 
-### 2. Heavy Sans — `--font-sans`
-**Identification:** **Inter** — verified from watai.ca.
-**Weights:** 900 (Black) for the solid hero; 600 (SemiBold) for emphasis within metadata or secondary sans lines.
-**Treatment:** solid white, no outline.
-**Use for:** announcements ("Applications Open"), names ("JARETT DEWBURY"), CTAs.
-**Sizes:** 60–110px on a 1080² canvas.
-**Casing:** Title Case for announcements, ALL CAPS for names.
+**Treatment:** outlined only, with `-webkit-text-stroke: 2px white; color:
+transparent;`.
 
-### 3. Monospace — `--font-mono`
-**Identification:** ⚠️ Default substitute — likely **JetBrains Mono** but unconfirmed; verify against source files.
-**Weights:** 400 (Regular) for body metadata; 500 (Medium) for labels and system tags.
-**Use for:** *all* metadata. Dates, locations, room numbers, tags, captions, list items, the WAT.AI wordmark, deadlines, system markers.
-**Sizes:** 14–24px on a 1080² canvas.
-**Casing:** mostly UPPERCASE for labels (`WORKSHOP · 01`, `ALUMNI SPOTLIGHT`); lowercase for friendly metadata (`deadline: May/June xth @ 11:59 pm`).
+**Use for:** conceptual hero phrases, workshop titles, and optional watermarks.
 
----
+**1080 square sizes:**
 
-## Type scale (1080×1080 canvas)
+- `display-xl`: 260px / 0.92
+- `display-lg`: 180px / 0.95
 
+### 2. Heavy sans: `--font-sans`
+
+**Default:** Inter, verified from watai.ca.
+
+**Weights:**
+
+- 900 for solid announcements and non-alumni hero text
+- 700 for alumni answer emphasis
+- 600 for secondary emphasis
+- 400 for body copy
+
+**Use for:** announcements, clean body copy, alumni Q&A answers, and supporting
+copy that must be read naturally.
+
+**1080 square sizes:**
+
+- `heading-xl`: 132px / 0.95
+- `heading-lg`: 96px / 1.0
+- `body-xl`: 42px / 1.35
+- `body-lg`: 36px / 1.38
+
+### 3. Condensed sans: `--font-condensed`
+
+**Default:** Bebas Neue if available. Fallbacks: Oswald, Impact, Inter Black,
+Arial Narrow, sans-serif. VERIFY final brand font.
+
+**Treatment:** solid, all caps, high letter spacing. Keep alumni Q&A questions
+lighter than the large question number; avoid Impact-heavy or ultra-black
+fallbacks when they make the title feel blocky.
+
+**Use for:** alumni names, alumni questions, and people-first headers.
+
+**1080 square sizes:**
+
+- `alumni-name-cover`: 132px / 0.88
+- `alumni-name-header`: 86px / 0.95
+- `alumni-question`: 44px / 1.16
+- `alumni-question-number`: 108px / 1.0
+- `alumni-eyebrow`: 38px / 1.0
+
+### 4. Monospace: `--font-mono`
+
+**Default:** JetBrains Mono, verify against source files.
+
+**Weights:**
+
+- 500 for labels, eyebrow text, system tags
+- 400 for captions and secondary metadata
+
+**Use for:** all metadata, dates, locations, tags, captions, achievement labels,
+and role lines under alumni names.
+
+**1080 square sizes:**
+
+- `label-lg`: 30px / 1.3
+- `label-md`: 24px / 1.35
+- `label-sm`: 18px / 1.35
+
+## Type scale reference
+
+```css
+--display-xl: 260px;
+--display-lg: 180px;
+--heading-xl: 132px;
+--heading-lg: 96px;
+--alumni-name-cover: 132px;
+--alumni-name-header: 86px;
+--alumni-question: 44px;
+--alumni-question-number: 108px;
+--alumni-eyebrow: 38px;
+--body-xl: 42px;
+--body-lg: 36px;
+--label-lg: 30px;
+--label-md: 24px;
+--label-sm: 18px;
 ```
-display-xl    220px / 0.95 line-height   → outlined serif hero ("Zero to ML")
-display-lg    150px / 1.0                → outlined serif secondary ("[ Core Member ]")
-heading-xl    100px / 1.0                → solid sans names ("JARETT DEWBURY")
-heading-lg     72px / 1.05               → solid sans announcements ("Applications Open")
-label-lg       22px / 1.4                → primary monospace metadata
-label-md       18px / 1.4                → secondary monospace metadata
-label-sm       14px / 1.4                → corner markers, footer wordmark
-```
 
-Scale proportionally for other canvas sizes (banner, story, etc.) — these are reference values, not absolutes.
+Scale proportionally for banners, stories, and other aspect ratios.
 
----
+## Spacing and layout
 
-## Spacing & layout
-
-- **Canvas padding:** 60–80px on a 1080² canvas (roughly 6–8% of the shorter edge).
-- **Negative space is the design.** Hero element occupies the center 50–70%; corners hold metadata; the rest is intentional black.
-- **Gold accent bar:** 6–8px wide vertical bar flush to a left edge, used sparingly (alumni-style posts).
-
----
+| Token | Value on 1080 square | Usage |
+| ----- | -------------------- | ----- |
+| `--pad` | `64px` | Default canvas padding. |
+| `--pad-lg` | `78px` | Alumni Q&A outer padding. |
+| `--brand-logo-h` | `48px` | Standard WAT.ai logo height. |
+| `--brand-logo-h-lg` | `58px` | Alumni cover logo height when framed. |
+| `--partner-logo-h` | `42px` | Standard partner logo height. |
+| `--alumni-photo-w` | `514px` | Cover slide left photo panel width. VERIFY. |
+| `--alumni-divider-w` | `7px` | Cover slide vertical gold divider. |
+| `--avatar-size` | `128px` | Q&A slide circular avatar. |
+| `--avatar-ring` | `6px` | Q&A avatar gold ring. |
+| `--qa-number-left` | `64px` | Q&A question number anchor; it stays slightly left of the question. |
+| `--qa-content-left` | `216px` | Shared left edge for Q&A question and answer text. |
+| `--qa-question-top` | `336px` | Top edge shared by the number and question. |
 
 ## Logo
 
-- The W-mark (butterfly silhouette) lives in `/assets/logo.svg`. Always render in `--gold`.
-- Lockup: `[mark] WAT.AI` in monospace, gold or muted-gold depending on context.
-- Default placement: bottom-right. Alt placements: bottom-left paired with `WATAI.CA` bottom-right.
-- Minimum mark height: 24px. Never recolor or rotate.
+- The official written WAT.ai logo lives in `/assets/logo.svg`.
+- Use the image asset, not typed text, for the main brand mark.
+- Default placement: bottom-right inside the bottom brand bar.
+- Minimum written-logo height: 32px on a 1080 square. Target 44 to 56px.
+- Alumni cover slides may use a thin rectangular brand frame around the logo.
+- Partner/company logos live in `/assets/logos/` and may appear in the bottom-left
+  brand bar or in an alumni identity lockup.
+- Never recolor, stretch, rotate, outline, or rebuild logos in text. If a needed
+  logo file is missing, leave a clear HTML comment and list the required file.
 
----
+## Alumni-specific components
 
-## Things that are *not* brand
+### Photo panel
 
-These look on-brand but aren't part of the system — don't generate them:
+```css
+width: var(--alumni-photo-w);
+height: 1080px;
+object-fit: cover;
+filter: brightness(0.78);
+```
+
+Use a flat black overlay if needed. Do not add blur, glow, or gradient effects.
+
+### Cover divider
+
+```css
+width: var(--alumni-divider-w);
+background: var(--gold);
+```
+
+The divider may start below the top edge, aligned to the content block.
+
+### Avatar ring
+
+```css
+width: var(--avatar-size);
+height: var(--avatar-size);
+border: var(--avatar-ring) solid var(--gold);
+border-radius: 50%;
+overflow: hidden;
+```
+
+### Answer text
+
+Alumni Q&A answers use sans body copy, not monospace. Emphasis is bold white
+sans, not gold.
+
+## Things that are not brand
+
+Do not generate these:
+
 - Drop shadows on type
-- Gradients (gold-to-white, fade-to-black, etc.)
-- Rounded corners on anything except the pill-outline tag
-- Decorative emoji or icons (the W-mark, chevron `›`, arrow `→`, brackets `[ ]`, dot `·`, bullet `•` are the full vocabulary)
+- Gold-filled main names
+- Decorative emoji or icons
+- Gradients
+- Rounded corners, except the pill tag and circular alumni avatar
+- Random photos outside alumni or people-first posts
+- Typed `WAT.AI` as the main brand mark

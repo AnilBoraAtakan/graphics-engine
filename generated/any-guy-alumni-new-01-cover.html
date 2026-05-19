@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1080">
+  <title>Any Guy Alumni Cover</title>
+  <style>
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 400; font-display: block; src: url('../assets/fonts/Inter-Regular.woff2') format('woff2'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 900; font-display: block; src: url('../assets/fonts/Inter-Black.woff2') format('woff2'); }
+    @font-face { font-family: 'JetBrains Mono'; font-style: normal; font-weight: 400; font-display: block; src: url('../assets/fonts/JetBrainsMono-Regular.woff2') format('woff2'); }
+    @font-face { font-family: 'JetBrains Mono'; font-style: normal; font-weight: 500; font-display: block; src: url('../assets/fonts/JetBrainsMono-Medium.woff2') format('woff2'); }
+
+    :root {
+      --bg: #000000;
+      --ink: #FFFFFF;
+      --ink-muted: #A8A8A8;
+      --gold: #D8B125;
+      --gold-dim: #7A6428;
+      --frame-line: rgba(216, 177, 37, 0.22);
+      --font-sans: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+      --font-condensed: Impact, 'Arial Narrow', 'Inter', sans-serif;
+      --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body, .canvas { width: 1080px; height: 1080px; overflow: hidden; background: var(--bg); }
+    .canvas { position: relative; color: var(--ink); }
+    .bg-layer { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.18; z-index: 0; }
+
+    .photo-panel {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 514px;
+      height: 1080px;
+      overflow: hidden;
+      background: var(--bg);
+      z-index: 2;
+      border-right: 1px solid rgba(216, 177, 37, 0.12);
+    }
+
+    .photo-filler {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 28px;
+      background: #030303;
+    }
+
+    .photo-head {
+      width: 190px;
+      height: 190px;
+      border: 7px solid var(--gold);
+      border-radius: 50%;
+      opacity: 0.82;
+    }
+
+    .photo-body {
+      width: 310px;
+      height: 172px;
+      border: 7px solid var(--gold);
+      border-bottom: 0;
+      border-radius: 170px 170px 0 0;
+      opacity: 0.82;
+    }
+
+    .photo-label {
+      position: absolute;
+      left: 52px;
+      bottom: 76px;
+      font-family: var(--font-mono);
+      font-size: 28px;
+      line-height: 1.25;
+      color: var(--gold);
+      letter-spacing: 0.08em;
+    }
+
+    .photo-filler::before {
+      content: '';
+      position: absolute;
+      inset: 52px;
+      border: 1px solid rgba(216, 177, 37, 0.18);
+    }
+
+    .photo-note {
+      position: absolute;
+      left: 52px;
+      bottom: 42px;
+      font-family: var(--font-mono);
+      font-size: 18px;
+      line-height: 1.2;
+      color: var(--ink-muted);
+      letter-spacing: 0.06em;
+    }
+
+    .divider {
+      position: absolute;
+      left: 514px;
+      top: 142px;
+      width: 7px;
+      height: 802px;
+      background: var(--gold);
+      z-index: 3;
+    }
+
+    .content {
+      position: absolute;
+      left: 592px;
+      top: 150px;
+      right: 72px;
+      z-index: 3;
+    }
+
+    .eyebrow {
+      font-family: var(--font-condensed);
+      font-size: 38px;
+      line-height: 1;
+      letter-spacing: 0.16em;
+      color: var(--gold);
+      margin-bottom: 30px;
+    }
+
+    .name {
+      font-family: var(--font-condensed);
+      font-size: 142px;
+      line-height: 0.88;
+      letter-spacing: 0.06em;
+      color: var(--ink);
+      text-transform: uppercase;
+      margin-bottom: 36px;
+    }
+
+    .short-rule { width: 78px; height: 4px; background: var(--gold); margin-bottom: 54px; }
+
+    .role-lockup { display: flex; align-items: center; gap: 22px; margin-bottom: 12px; }
+    .company-logo { height: 58px; max-width: 260px; object-fit: contain; display: block; }
+    .company-name { font-family: var(--font-sans); font-size: 48px; font-weight: 900; color: var(--ink); line-height: 1; }
+    .role-line { font-family: var(--font-mono); font-size: 25px; line-height: 1.3; color: var(--ink-muted); letter-spacing: 0.05em; }
+
+    .achievements { display: flex; gap: 46px; margin-top: 38px; align-items: flex-start; }
+    .achievement { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; min-width: 126px; }
+    .achievement img { height: 54px; max-width: 126px; object-fit: contain; display: block; }
+    .achievement-label { font-family: var(--font-mono); font-size: 22px; line-height: 1.2; color: var(--ink-muted); letter-spacing: 0.04em; }
+
+    .brand-frame {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      width: 560px;
+      height: 82px;
+      border: 1px solid var(--frame-line);
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding-right: 56px;
+      z-index: 4;
+    }
+
+    .watai-logo { display: block; height: 58px; max-width: 220px; width: auto; object-fit: contain; }
+  </style>
+</head>
+<body>
+  <div class="canvas" data-motif="constellation" data-layout="alumni-cover">
+    <svg class="bg-layer" id="bg" xmlns="http://www.w3.org/2000/svg"></svg>
+    <div class="photo-panel">
+      <div class="photo-filler">
+        <div class="photo-head"></div>
+        <div class="photo-body"></div>
+      </div>
+      <div class="photo-label">PHOTO TBD</div>
+      <div class="photo-note">ANY GUY PORTRAIT NOT SUPPLIED</div>
+    </div>
+    <div class="divider"></div>
+    <main class="content">
+      <div class="eyebrow">ALUMNI SPOTLIGHT</div>
+      <h1 class="name">ANY<br>GUY</h1>
+      <div class="short-rule"></div>
+      <div class="role-lockup">
+        <img class="company-logo" src="../assets/logos/nvidia.svg" alt="NVIDIA">
+        <div class="company-name">NVIDIA</div>
+      </div>
+      <div class="role-line">POST-GRAD PATHWAY · YC TO NVIDIA</div>
+      <div class="achievements">
+        <div class="achievement">
+          <img src="../assets/logos/y-combinator.svg" alt="Y Combinator">
+          <div class="achievement-label">YC</div>
+        </div>
+        <div class="achievement">
+          <img src="../assets/logos/nvidia.svg" alt="NVIDIA">
+          <div class="achievement-label">ACCELERATED COMPUTE</div>
+        </div>
+      </div>
+    </main>
+    <div class="brand-frame">
+      <img class="watai-logo" src="../assets/logo.svg" alt="WAT.ai">
+    </div>
+  </div>
+  <script>
+    (function () {
+      const svg = document.getElementById('bg');
+      const W = 1080, H = 1080;
+      svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+      let seed = 0xa11e101;
+      function rand() { seed ^= seed << 13; seed ^= seed >> 17; seed ^= seed << 5; return ((seed >>> 0) / 0xffffffff); }
+      function rr(a, b) { return a + rand() * (b - a); }
+      const pts = [];
+      for (let i = 0; i < 34; i++) pts.push([W * (0.38 + rand() * 0.60), H * (0.08 + rand() * 0.50)]);
+      for (let i = 0; i < 14; i++) pts.push([W * rand() * 0.48, H * (0.42 + rand() * 0.48)]);
+      let lines = '';
+      for (let i = 0; i < pts.length; i++) {
+        const sorted = pts.map((p, j) => [Math.hypot(pts[i][0] - p[0], pts[i][1] - p[1]), j]).filter(([, j]) => j !== i).sort(([a], [b]) => a - b);
+        for (let k = 0; k < 2; k++) {
+          const j = sorted[k][1];
+          lines += `<line x1="${pts[i][0].toFixed(1)}" y1="${pts[i][1].toFixed(1)}" x2="${pts[j][0].toFixed(1)}" y2="${pts[j][1].toFixed(1)}" stroke="#D8B125" stroke-width="1" opacity="0.28"/>`;
+        }
+      }
+      let dots = '';
+      for (const [x, y] of pts) dots += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${rr(1.2, 2.8).toFixed(1)}" fill="#D8B125" opacity="${rr(0.34, 0.72).toFixed(2)}"/>`;
+      svg.innerHTML = lines + dots;
+    })();
+  </script>
+</body>
+</html>
