@@ -40,13 +40,20 @@ be 1px and very low contrast.
 
 **Signals:** people, achievements, alumni, research, connection, community.
 
-**Look:** sparse dots with faint lines connecting nearby pairs. Alumni Q&A slides
-use the constellation mostly at the corners and edges, not behind the main answer
-copy. The second Carter Demars example has a light network in the upper-left and
-a second cluster in the lower-right.
+**Look:** sparse stars with faint lines connecting nearby pairs. Standard
+constellations use muted white/gray dots and low-contrast lines. Alumni Q&A
+slides use slightly larger, semi-transparent white stars connected by faint
+brand-gold lines so the motif is visible without competing with the interview
+copy. Keep the constellation mostly at the corners and edges, not behind the
+main answer copy. The second Carter Demars example has a light network in the
+upper-left and a second cluster in the lower-right.
 
 **Implementation hint:** generate 30 to 55 random points and connect each to its
-two nearest neighbors with a low-opacity stroke. Dots are small in `--ink-muted`.
+two nearest neighbors with a low-opacity stroke. For alumni Q&A, use white dots
+around 2 to 4px at roughly 40 to 70 percent opacity, gold lines around 1 to
+1.5px at roughly 35 to 40 percent opacity, and a background layer opacity around
+55 to 60 percent. For standard constellation posts, dots and lines can stay
+smaller and more muted.
 
 **Reference:** Carter Demars alumni carousel.
 
@@ -115,6 +122,9 @@ quote post.
 - WAT.ai written logo stays bottom-right.
 - Constellation motif should live around edges, especially upper-left and
   lower-right, leaving the body text area clean.
+- Use semi-transparent white stars connected by faint brand-gold lines on alumni
+  Q&A slides. Make the motif large enough to read as a constellation system, but
+  keep it behind the answer hierarchy.
 
 **Copy density:**
 

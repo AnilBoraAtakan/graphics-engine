@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="MIT square icon">
+  <title>MIT square icon</title>
+  <rect width="100" height="100" fill="#000000"/>
+  <g fill="#FFFFFF">
+    <rect x="18" y="34" width="7" height="32"/>
+    <rect x="30" y="34" width="6" height="25"/>
+    <rect x="41" y="34" width="7" height="32"/>
+    <rect x="53" y="34" width="7" height="7"/>
+    <rect x="65" y="34" width="17" height="7"/>
+    <rect x="53" y="46" width="7" height="20"/>
+    <rect x="65" y="46" width="6" height="20"/>
+  </g>
+</svg>

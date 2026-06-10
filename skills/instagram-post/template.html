@@ -515,7 +515,7 @@
     }
 
     .canvas[data-layout="alumni-qa"] .bg-layer {
-      opacity: 0.45;
+      opacity: 0.58;
     }
 
     .alumni-qa-header {
@@ -868,6 +868,11 @@
           }
         }
 
+        const isQaConstellation = layout === 'alumni-qa';
+        const lineStroke = isQaConstellation ? '#D8B125' : '#A8A8A8';
+        const lineWidth = isQaConstellation ? '1.4' : '1';
+        const lineOpacity = isQaConstellation ? '0.38' : '0.28';
+        const dotFill = isQaConstellation ? '#FFFFFF' : '#A8A8A8';
         let lines = '';
         for (let i = 0; i < pts.length; i++) {
           const sorted = pts
@@ -881,13 +886,15 @@
 
           for (let k = 0; k < 2; k++) {
             const j = sorted[k][1];
-            lines += `<line x1="${pts[i][0].toFixed(1)}" y1="${pts[i][1].toFixed(1)}" x2="${pts[j][0].toFixed(1)}" y2="${pts[j][1].toFixed(1)}" stroke="#A8A8A8" stroke-width="1" opacity="0.28"/>`;
+            lines += `<line x1="${pts[i][0].toFixed(1)}" y1="${pts[i][1].toFixed(1)}" x2="${pts[j][0].toFixed(1)}" y2="${pts[j][1].toFixed(1)}" stroke="${lineStroke}" stroke-width="${lineWidth}" opacity="${lineOpacity}"/>`;
           }
         }
 
         let dots = '';
         for (const [x, y] of pts) {
-          dots += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${rr(1, 2.2).toFixed(1)}" fill="#A8A8A8" opacity="${rr(0.3, 0.65).toFixed(2)}"/>`;
+          const r = isQaConstellation ? rr(1.8, 3.6) : rr(1, 2.2);
+          const op = isQaConstellation ? rr(0.4, 0.7) : rr(0.3, 0.65);
+          dots += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r.toFixed(1)}" fill="${dotFill}" opacity="${op.toFixed(2)}"/>`;
         }
 
         svg.innerHTML = lines + dots;

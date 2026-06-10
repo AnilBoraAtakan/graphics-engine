@@ -114,6 +114,10 @@ For every Q&A slide after the cover, preserve this geometry:
   overlap or visually merge.
 - If a question is long, reduce question font size or letter spacing before
   moving it into the number.
+- Use the constellation background as visible edge structure: semi-transparent
+  white stars connected by faint brand-gold lines. Keep clusters mostly in the
+  upper-left and lower-right so they frame the slide without sitting behind the
+  answer copy.
 
 Use one question per slide. If the answer is longer than about 90 words, split it
 across multiple slides.
